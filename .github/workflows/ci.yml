@@ -11,6 +11,10 @@ jobs:
           python-version: '3.11'
       - name: Install deps
         run: pip install -r requirements.txt
+      - name: Set environment variables
+        run: |
+          echo "OPENAI_API_KEY=test-openai-key" >> $GITHUB_ENV
+          echo "API_KEY=test-api-key" >> $GITHUB_ENV
       - name: Run tests
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)

@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     openai_api_key: str
@@ -16,7 +16,11 @@ class Settings(BaseSettings):
     celery_broker: str = "redis://redis:6379/0"
     celery_backend: str = "redis://redis:6379/1"
 
-    class Config:
-        env_file = ".env"
+    # ✅ New-style config (replaces class Config)
+    model_config = SettingsConfigDict(
+        env_file=".env",      # Load from .env file if present
+        env_file_encoding="utf-8",
+        extra="ignore"        # Ignore unexpected env vars
+    )
 
 settings = Settings()
